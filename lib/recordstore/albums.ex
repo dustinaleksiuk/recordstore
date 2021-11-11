@@ -7,6 +7,7 @@ defmodule RecordStore.Albums do
   alias RecordStore.Repo
 
   alias RecordStore.Albums.Album
+  alias RecordStore.Albums.Track
 
   @doc """
   Returns the list of albums.
@@ -52,6 +53,12 @@ defmodule RecordStore.Albums do
   def create_album(attrs \\ %{}) do
     %Album{}
     |> Album.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_track(attrs) do
+    %Track{}
+    |> Track.changeset(attrs)
     |> Repo.insert()
   end
 

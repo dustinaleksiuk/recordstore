@@ -4,6 +4,7 @@ defmodule RecordStore.Repo.Migrations.CreateAlbums do
   def change do
     create table(:albums) do
       add :name, :string
+      add :artist, :string
       add :rating, :integer
       add :genre, :string
 

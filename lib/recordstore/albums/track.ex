@@ -4,6 +4,7 @@ defmodule RecordStore.Albums.Track do
 
   schema "tracks" do
     field :name, :string
+    field :position, :integer
     field :album_id, :id
 
     timestamps()
@@ -12,7 +13,7 @@ defmodule RecordStore.Albums.Track do
   @doc false
   def changeset(track, attrs) do
     track
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :position])
     |> validate_required([:name])
   end
 end
