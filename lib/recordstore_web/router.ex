@@ -18,6 +18,16 @@ defmodule RecordStoreWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    live "/albums", AlbumLive.Index, :index
+    live "/albums/:id/edit", AlbumLive.Edit, :edit
+
+    live "/skateboarders", SkateboarderLive.Index, :index
+    live "/skateboarders/new", SkateboarderLive.Index, :new
+    live "/skateboarders/:id/edit", SkateboarderLive.Index, :edit
+
+    live "/skateboarders/:id", SkateboarderLive.Show, :show
+    live "/skateboarders/:id/show/edit", SkateboarderLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

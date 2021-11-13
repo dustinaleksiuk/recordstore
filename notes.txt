@@ -1,0 +1,40 @@
+Notes:
+- no modal
+- must edit children (tracks) on the same page as the parent, and save all at once.
+- validation
+
+
+This is output from the skateboarders live gen I did as a reference. This is all stuff I can delete later
+
+* creating lib/recordstore_web/live/skateboarder_live/show.ex
+* creating lib/recordstore_web/live/skateboarder_live/index.ex
+* creating lib/recordstore_web/live/skateboarder_live/form_component.ex
+* creating lib/recordstore_web/live/skateboarder_live/form_component.html.heex
+* creating lib/recordstore_web/live/skateboarder_live/index.html.heex
+* creating lib/recordstore_web/live/skateboarder_live/show.html.heex
+* creating test/recordstore_web/live/skateboarder_live_test.exs
+* creating lib/recordstore_web/live/modal_component.ex
+* creating lib/recordstore_web/live/live_helpers.ex
+* creating lib/recordstore/sports/skateboarder.ex
+* creating priv/repo/migrations/20211112003310_create_skateboarders.exs
+* creating lib/recordstore/sports.ex
+* injecting lib/recordstore/sports.ex
+* creating test/recordstore/sports_test.exs
+* injecting test/recordstore/sports_test.exs
+* creating test/support/fixtures/sports_fixtures.ex
+* injecting test/support/fixtures/sports_fixtures.ex
+* injecting lib/recordstore_web.ex
+
+Add the live routes to your browser scope in lib/recordstore_web/router.ex:
+
+    live "/skateboarders", SkateboarderLive.Index, :index
+    live "/skateboarders/new", SkateboarderLive.Index, :new
+    live "/skateboarders/:id/edit", SkateboarderLive.Index, :edit
+
+    live "/skateboarders/:id", SkateboarderLive.Show, :show
+    live "/skateboarders/:id/show/edit", SkateboarderLive.Show, :edit
+
+
+Remember to update your repository by running migrations:
+
+    $ mix ecto.migrate
