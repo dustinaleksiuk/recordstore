@@ -36,7 +36,18 @@ defmodule RecordStore.Albums do
       ** (Ecto.NoResultsError)
 
   """
-  def get_album!(id), do: Repo.get!(Album, id)
+  def get_album(id, preload \\ false) do
+    get_album(id, preload)
+  end
+
+  def get_album!(id, false) do
+    Repo.get!(Album, id)
+  end
+
+  def get_album!(id, true) do
+    get_album!(id, false)
+    |> Repo.preload(:tracks)
+  end
 
   @doc """
   Creates a album.

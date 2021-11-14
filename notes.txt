@@ -2,6 +2,10 @@ Notes:
 - no modal
 - must edit children (tracks) on the same page as the parent, and save all at once.
 - validation
+- parent holds the state
+- store fields in the form
+- don't manually try to manipulate the form params
+- preload in the context
 
 
 This is output from the skateboarders live gen I did as a reference. This is all stuff I can delete later

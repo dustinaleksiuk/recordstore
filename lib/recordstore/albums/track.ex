@@ -7,13 +7,15 @@ defmodule RecordStore.Albums.Track do
     field :position, :integer
     field :album_id, :id
 
+    field :temp_id, :string, virtual: true
+
     timestamps()
   end
 
   @doc false
   def changeset(track, attrs) do
     track
-    |> cast(attrs, [:name, :position])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :position, :temp_id])
+    |> validate_required([:name, :position])
   end
 end

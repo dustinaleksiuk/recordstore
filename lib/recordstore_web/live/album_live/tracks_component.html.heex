@@ -1,0 +1,22 @@
+<div>
+    Tracks component
+
+    <div class="track-list-container">
+        <%= for inner_form <- inputs_for(@form, :tracks) do %>
+        
+            <div>            
+                <%= text_input inner_form, :name %>
+                <%= error_tag inner_form, :name %>
+            </div>
+            <div>            
+                <%= text_input inner_form, :position %>
+                <%= error_tag inner_form, :position %>
+            </div>
+            <div>
+                <a href="#" phx-click="remove-track" phx-value-temp-id={input_value(inner_form, :temp_id)}>&times;</a>
+            </div>
+
+        <% end %>
+    </div>
+    <a href="#" phx-click="add-track">Add a Track</a>
+</div>

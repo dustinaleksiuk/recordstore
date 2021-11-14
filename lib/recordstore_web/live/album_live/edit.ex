@@ -3,11 +3,13 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
 
   alias RecordStore.Albums
   alias RecordStore.Albums.Album
+  alias RecordStore.Albums.Track
+  alias RecordStoreWeb.AlbumLive.TracksComponent
+
+  alias Ecto.Changeset
 
   @impl true
   def mount(_params, _session, socket) do
-    # IO.inspect(socket, label: "*** mount page album socket")
-
     {:ok, socket}
   end
 
@@ -17,7 +19,9 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
-    album = RecordStore.Albums.get_album!(id)
+    album = RecordStore.Albums.get_album!(id, true)
+
+    album = preload_temp_ids(album)
 
     changeset = Albums.change_album(album)
 
@@ -29,8 +33,13 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Skateboarder")
+    |> assign(:page_title, "New Album")
     |> assign(:album, %Album{})
+  end
+
+  defp preload_temp_ids(album) do
+    updated_tracks = Enum.map(album.tracks, fn t -> %Track{t | temp_id: Ecto.UUID.generate()} end)
+    %Album{album | tracks: updated_tracks}
   end
 
   @impl true
@@ -43,8 +52,26 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
+  def handle_event("add-track", _params, socket) do
+    changeset = socket.assigns.changeset
+    temp_id = Ecto.UUID.generate()
+
+    {_, existing_tracks} = Changeset.fetch_field(changeset, :tracks)
+
+    tracks =
+      Enum.concat(existing_tracks, [
+        %Track{temp_id: temp_id}
+      ])
+
+    changeset = Changeset.put_assoc(changeset, :tracks, tracks)
+    {:noreply, assign(socket, :changeset, changeset)}
+  end
+
+  def handle_request("remove-track", %{"temp-id" => temp_id}, socket) do
+    {:noreply, socket}
+  end
+
   def handle_event("save", %{"album" => album_params}, socket) do
-    IO.inspect(socket, label: "socket in save")
     save_album(socket, socket.assigns.live_action, album_params)
   end
 

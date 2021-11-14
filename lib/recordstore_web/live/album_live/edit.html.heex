@@ -16,6 +16,8 @@
     <%= text_input f, :rating %>
     <%= error_tag f, :rating %>
 
+    <.live_component module={TracksComponent} id="track-list" changeset={@changeset} form={f} />
+
     <div>
       <%= submit "Save", phx_disable_with: "Saving..." %>
     </div>
