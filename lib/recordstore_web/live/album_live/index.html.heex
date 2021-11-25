@@ -1,5 +1,5 @@
 <h1>Albums</h1>
 
 <%= for album <- @albums do %>
-    <span><%= live_redirect album.name, to: Routes.album_edit_path(@socket, :edit, album) %></span>
+    <div><%= live_redirect album.name, to: Routes.album_edit_path(@socket, :edit, album) %></div>
 <% end %>

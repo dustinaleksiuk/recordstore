@@ -37,3 +37,27 @@ alias RecordStore.Albums.Album
       %{name: "Trombone Dixie", position: 16}
     ]
   })
+
+{:ok, %Album{id: revolver_id}} =
+  RecordStore.Albums.create_album(%{
+    name: "Revolver",
+    artist: "The Beatles",
+    genre: "Rock/Pop",
+    rating: 8,
+    tracks: [
+      %{name: "Taxman", position: 1},
+      %{name: "Eleanor Rigby", position: 2},
+      %{name: "I'm Only Sleeping", position: 3},
+      %{name: "Love You To", position: 4},
+      %{name: "Here, There and Everywhere", position: 5},
+      %{name: "Yellow Submarine", position: 6},
+      %{name: "She Said She Said", position: 7},
+      %{name: "Good Day Sunshine", position: 8},
+      %{name: "And Your Bird Can Sing", position: 9},
+      %{name: "For No One", position: 10},
+      %{name: "Doctor Robert", position: 11},
+      %{name: "I Want to Tell you", position: 12},
+      %{name: "Got to Get You Into My Life", position: 13},
+      %{name: "Tomorrow Never Knows", position: 14}
+    ]
+  })
