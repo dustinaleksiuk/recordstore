@@ -56,19 +56,22 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
     changeset = socket.assigns.changeset
     temp_id = Ecto.UUID.generate()
 
-    {_, existing_tracks} = Changeset.fetch_field(changeset, :tracks)
-
     tracks =
-      Enum.concat(existing_tracks, [
-        %Track{temp_id: temp_id}
-      ])
+      Changeset.get_field(changeset, :tracks)
+      |> Enum.concat([%Track{temp_id: temp_id}])
 
     changeset = Changeset.put_assoc(changeset, :tracks, tracks)
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_request("remove-track", %{"temp-id" => temp_id}, socket) do
-    {:noreply, socket}
+  def handle_event("remove-track", %{"temp-id" => temp_id}, %{assigns: assigns} = socket) do
+    tracks =
+      Changeset.get_field(assigns.changeset, :tracks)
+      |> Enum.reject(&(&1.temp_id == temp_id))
+
+    changeset = Changeset.put_assoc(assigns.changeset, :tracks, tracks)
+
+    {:noreply, assign(socket, :changeset, changeset)}
   end
 
   def handle_event("save", %{"album" => album_params}, socket) do

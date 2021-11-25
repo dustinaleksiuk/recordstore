@@ -1,9 +1,8 @@
 <div>
     Tracks component
 
-    <div class="track-list-container">
+    <div class="track-list">
         <%= for inner_form <- inputs_for(@form, :tracks) do %>
-        
             <div>            
                 <%= text_input inner_form, :name %>
                 <%= error_tag inner_form, :name %>
