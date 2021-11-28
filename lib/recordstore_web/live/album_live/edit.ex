@@ -44,6 +44,11 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
 
   @impl true
   def handle_event("change", %{"album" => album_params}, socket) do
+    album_params = 
+      case album_params do
+        %{"tracks" => _} -> album_params 
+                       _ -> Map.put(album_params, "tracks", %{}) 
+      end
     changeset =
       socket.assigns.album
       |> Albums.change_album(album_params)
