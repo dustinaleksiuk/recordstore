@@ -3,6 +3,7 @@
 
     <div class="track-list">
         <%= for inner_form <- inputs_for(@form, :tracks) do %>
+            <%= hidden_input inner_form, :temp_id %>
             <div>            
                 <%= text_input inner_form, :name %>
                 <%= error_tag inner_form, :name %>
