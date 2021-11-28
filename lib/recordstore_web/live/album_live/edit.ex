@@ -74,13 +74,12 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
     {:noreply, assign(socket, :changeset, changeset)}
   end
 
-  def handle_event("save", %{"album" => %{"tracks" => _}} = params, socket) do
-    %{"album" => album_params} = params
-    save_album(socket, socket.assigns.live_action, album_params)
-  end
-
   def handle_event("save", %{"album" => album_params}, socket) do
-    album_params = Map.put(album_params, "tracks", %{}) 
+    album_params = 
+      case album_params do
+        %{"tracks" => _} -> album_params 
+                       _ -> Map.put(album_params, "tracks", %{}) 
+      end
     save_album(socket, socket.assigns.live_action, album_params)
   end
 
