@@ -44,6 +44,8 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
 
   @impl true
   def handle_event("change", %{"album" => album_params}, socket) do
+    album_params = album_params |> process_params()
+
     changeset =
       socket.assigns.album
       |> Albums.change_album(album_params)
@@ -75,6 +77,8 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
   end
 
   def handle_event("save", %{"album" => album_params}, socket) do
+    album_params = album_params |> process_params()
+
     save_album(socket, socket.assigns.live_action, album_params)
   end
 
@@ -88,6 +92,15 @@ defmodule RecordStoreWeb.AlbumLive.Edit do
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
+    end
+  end
+
+  # This is because when the last track is removed, the tracks field disappears from
+  # the params and the changeset no longer sees the change.
+  defp process_params(album_params) do
+    case album_params do
+      %{"tracks" => _} -> album_params
+      _ -> Map.put(album_params, "tracks", %{})
     end
   end
 end
