@@ -1,4 +1,5 @@
 defmodule RecordStoreWeb.LayoutView do
+  import Phoenix.Component, only: [live_flash: 2]
   use RecordStoreWeb, :view
 
   # Phoenix LiveDashboard is available only in development by default,
